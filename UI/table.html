@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="../dist/css/table.css">
+	<title>テーブルサンプル</title>
+</head>
+<body>
+	<div style="width:500px;">
+	<table class="sticky_table">
+	<thead>
+			<th>WarehouseCd</th>
+			<th>WarehouseName</th>
+			<th>ItemCd</th>
+			<th>ItemName</th>
+			<th>LotKey</th>
+			<th>LocationCd</th>
+			<th>LocationGroup</th>
+			<th>SlotType</th>
+			<th>①ActualQty</th>
+			<th>②AllocQty(Included①)</th>
+			<th>③SlotExpectQty(Not included①)</th>
+			<th>④AllocatableQty(①-②)</th>
+			<th>ProductionDay</th>
+			<th>PalletCount</th>
+			<th>CaseCount</th>
+			<th>PalletCapacity</th>
+			<th>OwnerCd</th>
+			<th>OwnerName</th>
+			<th>LocationType</th>
+			<th>LocationFlag</th>
+			<th>Unit1</th>
+			<th>SumWeight</th>
+			<th>Sumvolume</th>
+			<th>LastShipDate</th>
+			<th>ProdTransferQty(Not Include③)</th>
+			<th>ProdTransferWatingQty(Not Include③)</th>
+	</thead>
+		<tbody id="output_csv">
+		</tbody>
+	</table>
+</div>
+  <script>
+    const trClick = (num) => {
+      document.getElementById("chkbox"+num).checked ^= 1;
+    };
+  </script>
+	<script>
+		const outputElement = document.getElementById('output_csv');
+
+		function getCsvData(dataPath) {
+		 const request = new XMLHttpRequest();
+		 request.addEventListener('load', (event) => {
+		  const response = event.target.responseText;
+		  convertArray(response);
+		 });
+		 request.open('GET', dataPath, true);
+		 request.send();
+		}
+
+		function convertArray(data) {
+		 const dataArray = [];
+		 const dataString = data.split('\n');
+		 for (let i = 0; i < dataString.length; i++) {
+		  dataArray[i] = dataString[i].split(',');
+		 }
+		 let insertElement = '';
+		 dataArray.forEach((element) => {
+		  insertElement += '<tr>';
+		  element.forEach((childElement) => {
+		   insertElement += `<td>${childElement}</td>`
+		  });
+		  insertElement += '</tr>';
+		 });
+		 outputElement.innerHTML = insertElement;
+		}
+
+		getCsvData('./(DC)StockRef(Lot x Location).csv');
+
+	</script>
+</body>
+</html>

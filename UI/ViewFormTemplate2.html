@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ViewFormTemplate2</title>
+	<link rel="stylesheet" href="../dist/css/tabulator.css">
+	<link rel="stylesheet" href="../dist/css/jquery.resizableColumns.css">
+	<link rel="stylesheet" href="../dist/css/jquery-ui.css">
+	<link rel="stylesheet" href="../dist/css/jquery-ui.theme.css">
+	<style>
+		div {
+			background-color: #777777
+		}
+		table {
+			background-color: #FFFFFF;
+			border-collapse: collapse;
+		}
+		th {
+			background-color: #DDDDDD
+		}
+		.ui-resizable-e {
+			cursor: e-resize;
+			width: 1px;
+			right: -1px;
+			top: 0;
+			height: 100%;
+		}
+
+	</style>
+	<script type="text/javascript" src="../dist/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../dist/js/jquery-ui.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('.col').resizable({
+				handles:"e"
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="panel-top">
+		<form action="" method="post">
+		</form>
+	</div>
+	<br/>
+	<div id="panel-left">
+	</div>
+	<div id="panel-right" style="width:1000px;height:100%">
+		<div id="list-table">
+			<table border="1">
+				<thead>
+	        <tr>
+	            <th class="col">No.</th>
+							<th class="col">Name</th>
+	        </tr>
+				</thead>
+				<tbody>
+	        <tr>
+	            <td>001</td>
+							<td>坂本竜馬</td>
+	        </tr>
+	        <tr>
+	            <td>002</td>
+							<td>中岡慎太郎</td>
+	        </tr>
+					<tr>
+	            <td>003</td>
+							<td>岩崎弥太郎</td>
+	        </tr>
+					<tr>
+	            <td>004</td>
+							<td>後藤象二郎</td>
+	        </tr>
+				</tbody>
+	    </table>
+		</div>
+	</div>
+</body>
+</html>

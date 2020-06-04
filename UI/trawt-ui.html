@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../dist/css/jquery-ui.css">
+    <link rel="stylesheet" href="../dist/css/trawt-ui.css">
+    <style>
+  		div {
+  			background-color: #777777
+  		}
+  		table {
+  			background-color: #FFFFFF;
+  			border-collapse: collapse;
+  		}
+  		th {
+  			background-color: #DDDDDD
+  		}
+  		.ui-resizable-e {
+  			cursor: e-resize;
+  			width: 1px;
+  			right: -1px;
+  			top: 0;
+  			height: 100%;
+  		}
+  	</style>
+    <script type="text/javascript" src="../dist/js/jquery-3.5.1.js"></script>
+  	<script type="text/javascript" src="../dist/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="../dist/js/trawt-ui.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        var sampleData = [
+    		  {id:1, name:"坂本竜馬", gender:"male", dob:"", country:"高知"},
+    		  {id:2, name:"中岡慎太郎", gender:"male", dob:"1882/05/14", country:"高知"},
+    		  {id:3, name:"宮本武蔵", gender:"male", dob:"1882/05/22", country:"岡山"},
+    		  {id:4, name:"岩崎弥太郎", gender:"male", dob:"1880/08/01", country:"高知"},
+    		  {id:5, name:"後藤象二郎", gender:"male", dob:"1989/01/31", country:"高知"},
+    		];
+
+        var table = new TrwTable("#view-list", {
+          columns:[
+  					{title:"名前", field:"name"},
+  					{title:"性別", field:"gender"},
+  					{title:"生年月日", field:"dob"},
+  					{title:"出身地", field:"country"},
+  				],
+          data: sampleData,
+        });
+      });
+    </script>
+    <title></title>
+  </head>
+  <body>
+      <div id="view-list"></div>
+  </body>
+</html>
