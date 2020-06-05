@@ -19,39 +19,42 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		this.columns = {};
 
+		this.colLength = 0;
+
 		this.headerElement = null;
 
     var table = document.createElement("table");
-		table.style.border = "#FFFFFF 1px";
-		table.style.backgroundColor = "#FFFFFF";
 
-    var data = [
-                  [11, 12, 13],
-                  [21, 22, 23],
-                  [31, 32, 33],
-                  [41, 42, 43]
-               ];
+		table.style.border = "#FFFFFF 1px";
+//		table.style.backgroundColor = "#FFFFFF";
+		table.id = "resizable-table";
 
     this.initElement(element);
 
 		this.initOptions(options || {});
 
+		this.colLength = this.options["columns"].length;
+
 		this.Column = new Column(table, this.options["columns"]);
 
-    var rows = [];
+    var rows = {};
 
 		// Table要素生成
-    for (i = 0; i < data.length; i++) {
-      rows.push(table.insertRow(-1));
-      for(j = 0; j < data[0].length; j++) {
-        cell = rows[i].insertCell(-1);
-        cell.appendChild(document.createTextNode(data[i][j]));
-      }
-    }
-    this.element.classList.add("trawtable");
+		var tbody = document.createElement("tbody");
+
+		table.appendChild(tbody);
+
+		this.Data = new Data(tbody, this.colLength, this.options["data"]);
+
+		// 対象のdiv要素にテーブルを追加
     this.element.appendChild(table);
+
 		// UI設定
-		this.UISetting = new UiSetting();
+		this.UI = new Ui();
+
+		console.log(this.element);
+
+		this.element.classList.add("trawtable");
 
   };
 
@@ -119,13 +122,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		defaultOptionList: ["title", "field"],
 		initColumnOption: function(table, columns) {
 			this.headerElement = table.createTHead();
+			this.headerElement.classList.add("trawtable-header");
 			var row = this.headerElement.insertRow(0); // ヘッダーもいろいろできるようにしたいので後で検討
 			var cell = [];
 			var i = 0;
 			this.columns = columns;
 			this.columns.forEach(item=> {
 				cell[i] = row.insertCell(i);
-				cell[i].classList.add("col");
+				cell[i].classList.add("resizable-column");
 				cell[i].innerHTML = item.title; // カラムヘッダーのタイトル
 				// カラム毎のフォーマット設定保持
 
@@ -135,26 +139,61 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	// 行設定
-	var RowSetting = function() {
+	var Row = function() {
 
 	};
 
-	RowSetting.prototype = {
+	Row.prototype = {
+		initRows: function () {
 
+		},
 	};
 
-	// jQuery-ui
-	var UiSetting = function() {
-		this.initTableSetting();
-	}
+	// UI設定
+	var Ui = function() {
+		this.initTable();
+	};
 
-	UiSetting.prototype = {
-		initTableSetting: function() {
-			$(".col").resizable({ // リサイズ可能なカラムに設定
-				handles:"e"
+	Ui.prototype = {
+		initTable: function() {
+			$(".resizable-column").resizable({ // リサイズ可能なカラムに設定
+				handles:"e",
+				resize: function(event, ui) {
+
+				},
 			});
-		}
-	}
+		},
+	};
+	// データ設定
+	var Data = function(tbody, length, data) {
+		this.insertRow(tbody, length, data);
+	};
+
+	Data.prototype = {
+		initData: function(options) {
+
+		},
+		insertRow: function(tbody, length, data) {
+			this.length = length;
+			this.data = data;
+			var row = [];
+			var cell = [];
+			var i = 1;
+			this.data.forEach(item=> {
+				var j = 0;
+				row[i] = tbody.insertRow();
+				for (var key in item) {
+						if (key === "id") {
+							row[i].id = "item_" + i;
+						} else {
+							cell[i, j] = row[i].insertCell();
+							cell[i, j].innerHTML = item[key];
+						}
+				}
+				i++;
+			});
+		},
+	};
 
   return TrwTable;
 });
