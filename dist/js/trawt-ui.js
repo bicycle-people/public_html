@@ -156,14 +156,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	Ui.prototype = {
 		initTable: function() {
+			var tsize = 0;
 			$(".resizable-column").resizable({ // リサイズ可能なカラムに設定
 				handles:"e",
+				start: function(event, ui) {
+					tsize = document.getElementById("resizable-table").clientWidth;
+				},
 				resize: function(event, ui) {
-
+					console.log(tsize);
+					var resizeValue = ui.size.width - ui.originalSize.width;
+					var tableSize = tsize + resizeValue;
+					var panelSize = document.getElementById("view-list").clientWidth;
+					document.getElementById("resizable-table").width = tableSize;
+					if (panelSize <= tableSize + 1) {
+						document.getElementById("view-list").style.overflow = "scroll";
+					} else {
+						document.getElementById("view-list").style.overflow = "hidden";
+					};
 				},
 			});
 		},
 	};
+
 	// データ設定
 	var Data = function(tbody, length, data) {
 		this.insertRow(tbody, length, data);
