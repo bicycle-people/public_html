@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../dist/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../dist/css/ui.jqgrid.css">
+    <script type="text/javascript" src="../dist/js/jquery-3.5.1.js"></script>
+  	<script type="text/javascript" src="../dist/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="../dist/js/jqgrid/i18n/grid.locale-ja.js"></script>
+    <script type="text/javascript" src="../dist/js/jqgrid/jquery.jqGrid.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+
+        var date = [
+        	{no:1,name:"nakagawa",age:20,local:"Japan",hobby:"Tennis"},
+        	{no:2,name:"nakayama",age:20,local:"Japan",hobby:"Soccer"},
+          {no:3,name:"dunny",age:20,local:"USA",hobby:"Baseball"},
+          {no:4,name:"fumiko",age:20,local:"Japan",hobby:"Golf"},
+          {no:5,name:"ken",age:20,local:"Japan",hobby:"Swimming"},
+          {no:6,name:"michael",age:20,local:"USA",hobby:"Swimming"},
+          {no:7,name:"Joshua",age:20,local:"USA",hobby:"Golf"},
+          {no:8,name:"Christopher",age:20,local:"USA",hobby:"Soccer"},
+          {no:9,name:"Charlotte",age:20,local:"Deutschland",hobby:"Soccer"},
+          {no:10,name:"Luffy",age:20,local:"East Blue",hobby:"Martial Arts"},
+          {no:11,name:"Zoro",age:20,local:"East Blue",hobby:"Fencing"},
+          {no:12,name:"Nami",age:20,local:"East Blue",hobby:"Navigator"},
+          {no:13,name:"Usopp",age:20,local:"East Blue",hobby:"Sniper"},
+          {no:14,name:"Sanji",age:20,local:"North Blue",hobby:"Cook"},
+          {no:15,name:"Chopper",age:20,local:"Grand Line",hobby:"Doctor"},
+          {no:16,name:"",age:20,local:"Grand Line",hobby:""},
+        ];
+
+        //列の設定
+        var colModelSettings= [
+          // {name:"radio",index:"radio",width:50,align:"center",classes:"radio_class", resizable:true},
+        	{name:"no",index:"no",width:70,align:"center",classes:"no_class", resizable:true},
+        	{name:"name",index:"name",width:200,align:"center",classes:"name_class", resizable:true},
+        	{name:"age",index:"age",width:200,align:"center",classes:"age_class", resizable:true, editable:true},
+        	{name:"local",index:"local",width:200,align:"center",classes:"local_class", resizable:true},
+        	{name:"hobby",index:"hobby",width:200,align:"center",classes:"hobby_class", resizable:true}
+        ]
+        //列の表示名
+        var colNames = ["No.","name","age","local","hobby"];
+        //テーブルの作成
+        $("#view-list").jqGrid({
+        	data:date,                     //表示したいデータ
+        	datatype : "local",            //データの種別 他にjsonやxmlも選べます。しかし、私はlocalが推奨です。
+        	colNames : colNames,           //列の表示名
+        	colModel : colModelSettings,   //列ごとの設定
+        	rowNum : 10,                   //一ページに表示する行数
+        	rowList : [1, 10, 20],         //変更可能な1ページ当たりの行数
+        	caption : "",                  //ヘッダーのキャプション
+        	height : 200,                  //高さ
+        	width : 500,                   //幅
+        	pager : 'pager1',              //footerのページャー要素のid
+        	shrinkToFit : true,　　        //画面サイズに依存せず固定の大きさを表示する設定
+        	viewrecords: true,             //footerの右下に表示する。
+          multiselect: true,             //複数選択可否
+          cellEdit: true,                //
+          rownumbers: true,              //
+          hidegrid: false,               //
+          editurl: 'clientArray',
+          cellsubmit: 'clientArray',
+          onSelectRow:function(rowid, status,e) {
+            console.log('onSelectRow()');
+            console.log(rowid);
+            console.log(e);
+            console.log(status);
+          },
+        });
+      });
+    </script>
+    <title></title>
+  </head>
+  <body>
+      <table id="view-list"></table>
+      <div id="pager1"></div>
+  </body>
+</html>
